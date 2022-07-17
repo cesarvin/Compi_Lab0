@@ -17,12 +17,12 @@ class YAPLListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by YAPLParser#newclass.
-    def enterNewclass(self, ctx:YAPLParser.NewclassContext):
+    # Enter a parse tree produced by YAPLParser#define_class.
+    def enterDefine_class(self, ctx:YAPLParser.Define_classContext):
         pass
 
-    # Exit a parse tree produced by YAPLParser#newclass.
-    def exitNewclass(self, ctx:YAPLParser.NewclassContext):
+    # Exit a parse tree produced by YAPLParser#define_class.
+    def exitDefine_class(self, ctx:YAPLParser.Define_classContext):
         pass
 
 

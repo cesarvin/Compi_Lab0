@@ -14,8 +14,8 @@ class YAPLVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by YAPLParser#newclass.
-    def visitNewclass(self, ctx:YAPLParser.NewclassContext):
+    # Visit a parse tree produced by YAPLParser#define_class.
+    def visitDefine_class(self, ctx:YAPLParser.Define_classContext):
         return self.visitChildren(ctx)
 
 
