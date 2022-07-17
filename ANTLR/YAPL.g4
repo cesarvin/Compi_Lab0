@@ -4,13 +4,6 @@ grammar YAPL;
  * Consideraciones Léxicas
  */
 
-// enteros
-INT: [0-9]+;
-
-// identificador
-ID: [a-z][_A-Za-z0-9]*;
-TYPE: [A-Z][_A-Za-z0-9]*;
-
 // palabras reservadas
 CLASS: 'class' | 'CLASS';
 ELSE: 'else' | 'ELSE';
@@ -26,6 +19,13 @@ WHILE: 'while' | 'WHILE';
 NEW: 'new' | 'NEW';
 NOT: 'not' | 'NOT';
 LET: 'let' | 'LET';
+
+// identificador
+ID: [a-z][_A-Za-z0-9]*;
+TYPE: [A-Z][_A-Za-z0-9]*;
+
+// enteros
+INT: [0-9]+;
 
 // reservadas constantes
 FALSE: 'false';
@@ -63,26 +63,32 @@ EQUAL: '=';
 N_MARK: '~';
 LOWER_THAN: '<';
 LOWER_THAN_EQUAL: '<=';
+ERROR: . -> skip ;
 
 /*
  * Consideraciones Semanticas
  */
 
-program: (newclass SEMICOLON)+ EOF;
+// inicio del programa
+program: (define_class SEMICOLON)+ EOF;
 
-newclass:
+// definicion de clase
+define_class:
 	CLASS TYPE (INHERITS TYPE)? OPEN_CURLY_BRACKETS (
 		feature SEMICOLON
-	)* CLOSE_CURLY_BRACKETS;
+	)+ CLOSE_CURLY_BRACKETS;
 
+// contenido de una clase
 feature: (
-		ID OPEN_PARENTHESES (formal COMMA*)* CLOSE_PARENTHESES COLON TYPE OPEN_CURLY_BRACKETS expr
+		ID OPEN_PARENTHESES (formal COMMA?)* CLOSE_PARENTHESES COLON TYPE OPEN_CURLY_BRACKETS expr
 			CLOSE_CURLY_BRACKETS
 	)
 	| ID COLON TYPE (ASSING expr)?;
 
+// declaraciones
 formal: ID COLON TYPE;
 
+// expresiones
 expr:
 	expr OPEN_PARENTHESES (expr COMMA?)+ CLOSE_PARENTHESES
 	| expr (AT TYPE)? DOT ID OPEN_PARENTHESES (
